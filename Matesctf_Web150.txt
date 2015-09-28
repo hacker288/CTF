@@ -1,0 +1,44 @@
+<?php
+error_reporting(0);
+$user_list = array(
+    0 => array('username' => 'admin', 'password' => '1234555767687687689797'),
+    1 => array('username' => 'girl1', 'password' => 'xxxxxxxxxxxxxxxxxxxxxx'),
+    2 => array('username' => 'girl2', 'password' => 'xxxxxxxxxxxxxxxxxxxxxx'),
+    3 => array('username' => 'girl3', 'password' => 'xxxxxxxxxxxxxxxxxxxxxx'),
+    4 => array('username' => 'girl4', 'password' => 'xxxxxxxxxxxxxxxxxxxxxx'),
+    5 => array('username' => 'girl5', 'password' => 'xxxxxxxxxxxxxxxxxxxxxx'),
+    6 => array('username' => 'girl6', 'password' => 'xxxxxxxxxxxxxxxxxxxxxx')
+);
+//mảng 2 chiều lưu trữ username và password
+function add_prefix($username) {
+    return "MATESCTF_" . $username;
+} // Hàm tạo ra prefix 
+
+foreach ($user_list as & $user) {
+    $user['username'] = add_prefix($user['username']); // add frefix vào cho từng user
+}
+
+if (isset($_GET['user']) && !empty($_GET['user']) && isset($_GET['password']) && !empty($_GET['password'])) {
+    $user = $_GET['user'];  // gán giá trị người dùng nhập vào biến $user
+    $pass = $_GET['password']=$user_list[0]['password']; //gán giá trị password người dùng nhập vào biến $pass
+    $flag = false;  // đặt $flag = false
+    //Load all user list
+    foreach ($user_list as $key => $value) // duyệt tường user_list {
+        $username = $value['username']; //gán từng username trong list vào biến $user_name
+        $password = $value['password']; // gán từng password trong list vào biến $pass_word
+        if ($username === "admin" && $password === $pass) {
+            $flag = true;
+        }
+    }
+    if ($flag) {
+        echo "matesctf{xxxxxxxxxxxxxxxxxxxxxxxxxxxxx}";
+    } else {
+        echo "Wrong, Try again!";
+    }
+} else {
+    echo "<a href='?user=tester&password=test'>Link</a>";
+    for ($i = 0; $i < 300; $i++)
+        echo " ";
+    echo "<!--index.txt-->";
+}
+?>
